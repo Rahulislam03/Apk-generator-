@@ -14,16 +14,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Gradle
-        run: |
-          # গ্র্যাডল এনভায়রনমেন্ট তৈরি করা
-          gradle wrapper --gradle-version 8.1.1
-          chmod +x gradlew
-          ./gradlew assembleDebug --stacktrace
-          
+      # গিটহাবকে সরাসরি Gradle 8.1.1 ব্যবহার করতে বাধ্য করা হচ্ছে
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 8.1.1
+
+      - name: Build APK
+        run: gradle assembleDebug --stacktrace
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MixveoTV-Final
+          name: MixveoTV-App
           path: app/build/outputs/apk/debug/app-debug.apk
           
