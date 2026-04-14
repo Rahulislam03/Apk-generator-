@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         player = ExoPlayer.Builder(this).build()
         playerView.player = player
 
-        // তোমার তৈরি করা সেই লাইভ টিভি লিঙ্ক (যেকোনো একটি চ্যানেল টেস্ট করার জন্য)
+        // টেস্ট করার জন্য একটি লাইভ টিভি লিঙ্ক
         val videoUrl = "https://bozztv.com/rongo/rongo-somoy/index.m3u8"
         
         val mediaItem = MediaItem.fromUri(videoUrl)
@@ -31,4 +31,3 @@ class MainActivity : AppCompatActivity() {
         player?.release()
     }
 }
-
