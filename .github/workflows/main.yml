@@ -1,6 +1,6 @@
 name: Build APK
 
-on: [workflow_dispatch] # তুমি যখন বাটনে ক্লিক করবে তখনই বিল্ড হবে
+on: [workflow_dispatch]
 
 jobs:
   build:
@@ -12,18 +12,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          
-      - name: Build APK
+          cache: gradle
+
+      - name: Build with Gradle
         run: |
-          if [ ! -f "gradlew" ]; then
-            gradle wrapper --gradle-version 8.1.1
-          fi
+          gradle wrapper --gradle-version 8.1.1
           chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MyTVApp
+          name: MixveoTV-Debug
           path: app/build/outputs/apk/debug/app-debug.apk
           
