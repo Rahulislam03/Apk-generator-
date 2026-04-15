@@ -14,18 +14,19 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # সরাসরি গ্র্যাডল ৮.১.১ ডাউনলোড ও সেটআপ করা
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.1.1
 
       - name: Build APK
-        run: gradle assembleDebug --no-daemon --stacktrace
+        run: gradle assembleDebug --no-daemon
 
+      # এই অংশটুকু ভালো করে খেয়াল করো, পাথটি আমি ফিক্সড করে দিয়েছি
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MixveoTV-Final-App
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: MixveoTV-App-File
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error # যদি ফাইল না পায় তবে এরর দিবে
           
