@@ -8,26 +8,34 @@ import androidx.media3.ui.PlayerView
 
 class MainActivity : AppCompatActivity() {
     private var player: ExoPlayer? = null
+    private lateinit var playerView: PlayerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val playerView = PlayerView(this)
+        
+        // প্লেয়ার ভিউ তৈরি করা
+        playerView = PlayerView(this)
         setContentView(playerView)
 
+        initializePlayer()
+    }
+
+    private fun initializePlayer() {
         player = ExoPlayer.Builder(this).build()
         playerView.player = player
 
-        // টেস্ট করার জন্য একটি লাইভ টিভি লিঙ্ক
+        // একটি সচল লাইভ টিভি লিঙ্ক (টেস্ট করার জন্য)
         val videoUrl = "https://bozztv.com/rongo/rongo-somoy/index.m3u8"
         
         val mediaItem = MediaItem.fromUri(videoUrl)
         player?.setMediaItem(mediaItem)
         player?.prepare()
-        player?.play()
+        player?.playWhenReady = true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         player?.release()
+        player = null
     }
 }
